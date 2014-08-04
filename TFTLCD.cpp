@@ -1,7 +1,6 @@
 #include "TFTLCD.h"
 
 
-
 #ifdef USE_ADAFRUIT_SHIELD_PINOUT
 // special defines for the dataport
  #define DATAPORT1 PORTD
@@ -375,6 +374,8 @@ void TFTLCD::drawFastLine(uint16_t x, uint16_t y, uint16_t length,
       newentrymod = 0x1008;   // we want a 'horizontal line'
     break;
   }
+
+  y = TFTHEIGHT - y;
   
   writeRegister(TFTLCD_ENTRY_MOD, newentrymod);
 
@@ -491,7 +492,8 @@ void TFTLCD::drawPixel(uint16_t x, uint16_t y, uint16_t color)
     y = TFTHEIGHT - y - 1;
     break;
   }
-    
+
+  y = TFTHEIGHT - y;
   if ((x >= TFTWIDTH) || (y >= TFTHEIGHT)) return;
   writeRegister(TFTLCD_GRAM_HOR_AD, x); // GRAM Address Set (Horizontal Address) (R20h)
   writeRegister(TFTLCD_GRAM_VER_AD, y); // GRAM Address Set (Vertical Address) (R21h)
